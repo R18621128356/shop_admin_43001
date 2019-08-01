@@ -48,6 +48,7 @@ export default {
           message: '退出成功!',
           duration: 800
         })
+
         // 返回
         this.$router.push('/login')
       }).catch(() => {
