@@ -26,14 +26,51 @@
     <!-- 容器 -->
     <el-container>
       <!-- 左侧栏 -->
-      <el-aside width="200px">Aside</el-aside>
+      <el-aside width="200px">
+        <!-- 菜单导航 -->
+        <el-menu
+          :router='true'
+          :default-active="handleUrlPath()"
+          @close="handleClose"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+        >
+          <el-submenu index="1">
+            <!-- 标题 -->
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>用户管理</span>
+            </template>
+            <!-- 选项 -->
+            <el-menu-item index='/users'>用户列表</el-menu-item>
+          </el-submenu>
+
+          <el-submenu index="2">
+            <!-- 标题 -->
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>权限管理</span>
+            </template>
+            <!-- 选项 -->
+            <el-menu-item index='/roles'>角色列表</el-menu-item>
+            <el-menu-item index='/rights'>权限列表</el-menu-item>
+          </el-submenu>
+
+        </el-menu>
+
+      </el-aside>
       <!-- 主体 -->
-      <el-main>Main</el-main>
+      <el-main>
+        <!-- 嵌套路由出口 -->
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
+/* eslint-disable */
 export default {
   methods: {
     logout () {
@@ -42,14 +79,18 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        // 点击确定 的提示
+
+        // 0.删除本地的 token
+        localStorage.removeItem('token')
+
+        //1. 点击确定 的提示
         this.$message({
           type: 'success',
           message: '退出成功!',
           duration: 800
         })
 
-        // 返回
+        // 2.返回
         this.$router.push('/login')
       }).catch(() => {
         // 点击取消 的提示
@@ -59,6 +100,22 @@ export default {
           duration: 800
         })
       })
+    },
+    // 开
+    handleOpen () {
+      console.log('开了');
+
+    },
+
+    // 关
+    handleClose () {
+      console.log('关了');
+
+    },
+    // 处理url哈希值路径的方法
+    handleUrlPath () {
+      // 想怎么处理就怎么处理
+      return this.$route.path
     }
   }
 
