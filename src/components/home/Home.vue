@@ -73,33 +73,63 @@
 /* eslint-disable */
 export default {
   methods: {
-    logout () {
-      this.$confirm('此操作将退出账户, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
+    // 退出功能
+    async logout () {
+
+      try {
+        let res = await this.$confirm('此操作将退出账户, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
 
         // 0.删除本地的 token
         localStorage.removeItem('token')
-
         //1. 点击确定 的提示
         this.$message({
           type: 'success',
           message: '退出成功!',
           duration: 800
         })
-
         // 2.返回
         this.$router.push('/login')
-      }).catch(() => {
+      } catch (error) {
         // 点击取消 的提示
         this.$message({
           type: 'info',
           message: '取消退出',
           duration: 800
         })
-      })
+      }
+
+
+
+      // this.$confirm('此操作将退出账户, 是否继续?', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   type: 'warning'
+      // }).then(() => {
+
+      //   // 0.删除本地的 token
+      //   localStorage.removeItem('token')
+
+      //   //1. 点击确定 的提示
+      //   this.$message({
+      //     type: 'success',
+      //     message: '退出成功!',
+      //     duration: 800
+      //   })
+
+      //   // 2.返回
+      //   this.$router.push('/login')
+      // }).catch(() => {
+      //   // 点击取消 的提示
+      //   this.$message({
+      //     type: 'info',
+      //     message: '取消退出',
+      //     duration: 800
+      //   })
+      // })
     },
     // 开
     handleOpen () {
